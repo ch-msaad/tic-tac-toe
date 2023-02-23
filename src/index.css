@@ -22,34 +22,64 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100px;
-  height: 100px;
-  border: 1px solid black;
-  font-size: 40px;
+  width: 150px;
+  height: 150px;
+  border: 3px solid #283845;
+  font-size: 60px;
   font-weight: bold;
+  color: #283845;
+  background-color: #FCA311;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .square:hover {
-  background-color: lightgray;
+  background-color: #E5E5E5;
+}
+
+.square:focus {
+  outline: none;
+  border-color: #A2A2A2;
 }
 
 .winner {
   margin-top: 20px;
-  font-size: 30px;
+  font-size: 50px;
   font-weight: bold;
+  color: #283845;
+  text-align: center;
 }
 
 .reset-button {
-  margin-top: 20px;
-  font-size: 20px;
+  margin-top: 30px;
+  font-size: 30px;
   font-weight: bold;
-  background-color: lightgray;
+  color: white;
+  background-color: #283845;
   border: none;
-  padding: 10px 20px;
+  border-radius: 5px;
+  padding: 15px 30px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .reset-button:hover {
-  background-color: gray;
+  background-color: #FCA311;
+}
+
+@media screen and (max-width: 768px) {
+  .square {
+    width: 80px;
+    height: 80px;
+    font-size: 30px;
+  }
+  
+  .winner {
+    font-size: 30px;
+  }
+  
+  .reset-button {
+    font-size: 20px;
+    padding: 10px 20px;
+  }
 }
