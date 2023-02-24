@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [player, setPlayer] = useState("X");
+  const [playerOne, setPlayerOne] = useState("");
+  const [playerTwo, setPlayerTwo] = useState("");
+  const [currentPlayer, setCurrentPlayer] = useState("X");
   const [board, setBoard] = useState(Array(9).fill(""));
   const [winner, setWinner] = useState(null);
 
@@ -38,14 +40,14 @@ function App() {
     }
 
     const newBoard = [...board];
-    newBoard[index] = player;
+    newBoard[index] = currentPlayer;
     setBoard(newBoard);
 
     const newWinner = checkWinner(newBoard);
     if (newWinner) {
       setWinner(newWinner);
     } else {
-      setPlayer(player === "X" ? "O" : "X");
+      setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
     }
   };
 
@@ -58,34 +60,63 @@ function App() {
   };
 
   const resetGame = () => {
-    setPlayer("X");
+    setPlayerOne("");
+    setPlayerTwo("");
+    setCurrentPlayer("X");
     setBoard(Array(9).fill(""));
     setWinner(null);
   };
 
+  const handlePlayerSubmit = (event) => {
+    event.preventDefault();
+    setPlayerOne(event.target.playerOne.value);
+    setPlayerTwo(event.target.playerTwo.value);
+  };
+
   return (
     <div className="app">
-      <div className="board">
-        <div className="row">
-          {renderSquare(0)}
-          {renderSquare(1)}
-          {renderSquare(2)}
+      {!playerOne && !playerTwo && (
+        <form className="player-form" onSubmit={handlePlayerSubmit}>
+          <label>
+            Player 1 (X):
+            <input type="text" name="playerOne" />
+          </label>
+          <label>
+            Player 2 (O):
+            <input type="text" name="playerTwo" />
+          </label>
+          <button type="submit">Start Game</button>
+        </form>
+      )}
+      {(playerOne || playerTwo) && (
+        <div className="board">
+          <div className="row">
+            {renderSquare(0)}
+            {renderSquare(1)}
+            {renderSquare(2)}
+          </div>
+          <div className="row">
+            {renderSquare(3)}
+            {renderSquare(4)}
+            {renderSquare(5)}
+          </div>
+          <div className="row">
+            {renderSquare(6)}
+            {renderSquare(7)}
+            {renderSquare(8)}
+          </div>
         </div>
-        <div className="row">
-          {renderSquare(3)}
-          {renderSquare(4)}
-          {renderSquare(5)}
-        </div>
-        <div className="row">
-          {renderSquare(6)}
-          {renderSquare(7)}
-          {renderSquare(8)}
-        </div>
-      </div>
+      )}
+
       {winner && <div className="winner">Winner: {winner}</div>}
-      <button className="reset-button" onClick={resetGame}>
-        Reset Game
-      </button>
+      {(playerOne || playerTwo) && (
+        <div className="current-player">
+          Current Player: {currentPlayer === "X" ? playerOne : playerTwo}
+          <button className="reset-button" onClick={resetGame}>
+            Reset Game
+          </button>
+        </div>
+      )}
     </div>
   );
 }
